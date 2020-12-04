@@ -1,15 +1,15 @@
 import React from "react";
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { addElement, changeViewMode } from "../../redux/actions";
-import { StateObject } from "../../types";
+import { StateObject } from "../../redux/store";
 import { ElementTypes, ViewModes } from "../../constants";
 import InputCell from "../InputCell/InputCell";
 import DisplayCell from "../DisplayCell/DisplayCell";
-import Dropdown from "../Dropdown/Dropdown";
 
 // initialize parser object
 var FormulaParser = require("hot-formula-parser").Parser;
+export const SUPPORTED_FORMULAS = require("hot-formula-parser").SUPPORTED_FORMULAS;
 export var parser = new FormulaParser();
 
 interface FormProps {}
@@ -17,11 +17,11 @@ interface FormProps {}
 function Form(props: FormProps) {
     const dispatch = useDispatch();
     const elementsByID = useSelector((state: StateObject) => {
-        return { ...state.elements.byID };
-    });
+        return state.elements.byID;
+    }, shallowEqual);
     const allIDs = useSelector((state: StateObject) => {
-        return [...state.elements.allIDs];
-    });
+        return state.elements.allIDs;
+    }, shallowEqual);
     const viewMode = useSelector((state: StateObject) => {
         return state.application.viewMode;
     });
@@ -67,7 +67,6 @@ function App() {
     return (
         <div>
             <Form />
-            <Dropdown show={true} onSelection={(selection) => {}} options={[{text: 'hello', value: 'val'}]} />
         </div>
     );
 }
