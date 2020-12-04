@@ -1,8 +1,29 @@
 import { combineReducers, createStore } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { elementsReducer, applicationReducer } from "./reducers";
-import { StateObject } from "../types";
 import { ViewModes } from "../constants";
+
+
+export interface ElementObject {
+    accessID: string;
+    elementType: string;
+    userAssignedID: string;
+    value: string;
+    formula: string;
+}
+export interface ElementsDictionary {
+    [index: string]: ElementObject;
+}
+
+export interface StateObject {
+    elements: {
+        byID: ElementsDictionary;
+        allIDs: string[];
+    };
+    application: {
+        viewMode: string;
+    };
+}
 
 export const initialState: StateObject = {
     elements: {
