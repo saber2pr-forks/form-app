@@ -27,5 +27,5 @@ export default function Dropdown(props: DropdownProps) {
         );
     });
 
-    return <div className={"dropdown"}>{choices}</div>;
+    return <div className={props.options.length === 0 ? "hidden" : "dropdown"}>{choices}</div>;
 }
