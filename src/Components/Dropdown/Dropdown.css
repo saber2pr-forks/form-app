@@ -1,0 +1,41 @@
+:root {
+    --backgroundColor: #ffffff;
+    --textColor: #535353;
+    --highlightColor: #d1d1d1;
+    --textSize: 1rem;
+    --viewportHeight: 5rem;
+    --scrollbarColor: #b1b1b1;
+    --scrollbarWidth: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.dropdown {
+    width: 100%;
+    max-height: var(--viewportHeight);
+    background-color: var(backgroundColor);
+    border: 1px solid var(--textColor);
+    box-shadow: 1px 2px 0 var(--highlightColor);
+    overflow-y: auto;
+}
+
+.dropdown::-webkit-scrollbar {
+    width: var(--scrollbarWidth);
+    background-color: var(--highlightColor);
+}
+.dropdown::-webkit-scrollbar-thumb {
+    width: var(--scrollbarWidth);
+    height: 10px;
+    background-color: var(--scrollbarColor);
+}
+
+.dropdown-choice {
+    color: var(--textColor);
+}
+
+.dropdown-choice:hover {
+    background-color: var(--highlightColor);
+    transition: .1s;
+}
