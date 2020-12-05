@@ -40,6 +40,7 @@ export default function InputCell(props: InputCellProps) {
             value={getCellValue()}
             handleValueChange={handleValueChange}
             readonly={viewMode === ViewModes.formulas}
+            autocomplete={false}
         />
     );
 }
