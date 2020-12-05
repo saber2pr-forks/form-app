@@ -1,10 +1,12 @@
 import React from "react";
+import './Cell.css'
 
 interface CellProps {
     id: string;
     value: string;
     handleValueChange(event: React.ChangeEvent<HTMLInputElement>): void;
     readonly: boolean;
+    autocomplete: boolean;
 }
 
 /**
@@ -20,6 +22,7 @@ export function Cell(props: CellProps) {
                 onChange={props.handleValueChange}
                 value={props.value}
                 readOnly={props.readonly}
+                autoComplete={props.autocomplete ? 'on' : 'off'}
             />
         </div>
     );
