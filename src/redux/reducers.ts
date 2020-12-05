@@ -18,7 +18,7 @@ export function elementsReducer(state = initialState.elements, action: ElementsA
 
         case CHANGE_ELEMENT_FORMULA:
             newElementsObject[action.payload.id].formula = action.payload.formula;
-            return { byID: newElementsObject, allIDs: newIDArray };
+            return { byID: newElementsObject, allIDs: state.allIDs };
 
         case ADD_ELEMENT:
             const newID = "element" + newIDArray.length;
