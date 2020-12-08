@@ -1,15 +1,15 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ViewModes } from "../../constants";
-import { changeElementFormula } from "../../redux/actions";
 import { parser, SUPPORTED_FORMULAS } from "../App/App";
 import { Cell } from "../Cell/Cell";
 import { stringIsNumber } from "../../utils/util";
 import Dropdown from "../Dropdown/Dropdown";
-import { StateObject } from "../../redux/store";
+import { RootState } from "../../redux/store";
+import dataSlice from "../../redux/dataSlice";
 
 interface DisplayCellProps {
-    accessID: string;
+    id: string;
 }
 
 /**
@@ -17,14 +17,14 @@ interface DisplayCellProps {
  */
 export default function DisplayCell(props: DisplayCellProps) {
     const dispatch = useDispatch();
-    const element = useSelector((state: StateObject) => {
-        return { ...state.elements.byID[props.accessID] };
+    const element = useSelector((state: RootState) => {
+        return { ...state.data.elements[props.id] };
     });
-    const viewMode = useSelector((state: StateObject) => {
+    const viewMode = useSelector((state: RootState) => {
         return state.application.viewMode;
     });
-    const elementsByID = useSelector((state: StateObject) => {
-        return { ...state.elements.byID };
+    const elementsByID = useSelector((state: RootState) => {
+        return { ...state.data.elements };
     });
 
     const uppercaseFormula = element.formula.toUpperCase().split("(").slice(-1)[0]; // create const for performance
@@ -43,31 +43,37 @@ export default function DisplayCell(props: DisplayCellProps) {
 
     const handleValueChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
-            dispatch(changeElementFormula(element.accessID, event.target.value));
+            dispatch(
+                dataSlice.actions.formulaChanged({ id: element.id, formula: event.target.value })
+            );
         },
-        [dispatch, element.accessID]
+        [dispatch, element.id]
     );
 
     const handleDropdownClick = useCallback(
         (selection: string) => {
-            dispatch(changeElementFormula(element.accessID, element.formula + selection + "("));
+            dispatch(
+                dataSlice.actions.formulaChanged({
+                    id: element.id,
+                    formula: element.formula + selection + "(",
+                })
+            );
         },
-        [dispatch, element.accessID, element.formula]
+        [dispatch, element.id, element.formula]
     );
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLElement>) => {
         if ((event.key === "Enter" || event.key === "Tab") && dropdownOptions.length > 0) {
-            const appendToFront =
-                !element.formula.includes('(')
-                    ? ""
-                    : element.formula.split("(").slice(0, -1).join("(") + // replace everything after last open parentheses
-                      "("; // add parenthesis back after removal during split
+            const appendToFront = !element.formula.includes("(")
+                ? ""
+                : element.formula.split("(").slice(0, -1).join("(") + // replace everything after last open parentheses
+                  "("; // add parenthesis back after removal during split
 
             dispatch(
-                changeElementFormula(
-                    element.accessID,
-                    appendToFront + dropdownOptions[0].text + "("
-                )
+                dataSlice.actions.formulaChanged({
+                    id: element.id,
+                    formula: appendToFront + dropdownOptions[0].text + "(",
+                })
             );
         }
     };
@@ -81,7 +87,14 @@ export default function DisplayCell(props: DisplayCellProps) {
             const matchedIDs = formula.match(/{.+?}/g);
             if (matchedIDs !== null) {
                 for (let id of matchedIDs) {
-                    let valueToInsert = elementsByID[id.slice(1, -1)].value;
+                    // check that id exists before lookup
+                    let valueToInsert;
+                    if (elementsByID[id.slice(1, -1)] !== undefined) {
+                        // make sure that the id exists before adding it
+                        valueToInsert = elementsByID[id.slice(1, -1)].value; // slice off { and }
+                    } else {
+                        return "#ERROR";
+                    }
 
                     // check the type of the value because all are stored as strings
                     // but quotes must be added to non number values
@@ -89,29 +102,34 @@ export default function DisplayCell(props: DisplayCellProps) {
                         formula = formula.replace(id, valueToInsert);
                     } else if (!stringIsNumber(valueToInsert)) {
                         formula = formula.replace(id, '"' + valueToInsert + '"'); // add quotes for string inputs
-                    } else if (valueToInsert === undefined) {
-                        formula = formula.replace(id, "0");
                     }
                 }
             }
             const calc = parser.parse(formula);
             if (calc.error !== null) return calc.error;
             return calc.result;
+        } else {
+            return "";
         }
     };
 
     return (
         <div onKeyPress={handleKeyPress}>
             <Cell
-                id={element.userAssignedID}
+                id={element.id}
                 value={getCellValue()}
                 handleValueChange={handleValueChange}
                 readonly={viewMode === ViewModes.values}
                 autocomplete={false}
-            />
-            {viewMode === ViewModes.formulas ? (
-                <Dropdown onSelection={handleDropdownClick} options={dropdownOptions} />
-            ) : undefined}
+            >
+                {viewMode === ViewModes.formulas ? (
+                    <Dropdown
+                        key={"dropdown" + element.id}
+                        onSelection={handleDropdownClick}
+                        options={dropdownOptions}
+                    />
+                ) : undefined}
+            </Cell>
         </div>
     );
 }
