@@ -1,43 +1,29 @@
-import { combineReducers, createStore } from "@reduxjs/toolkit";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { elementsReducer, applicationReducer } from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
 import { ViewModes } from "../constants";
+import dataSlice from "./dataSlice";
+import stylesSlice from "./stylesSlice";
+import applicationSlice from "./applicationSlice";
 
-
-export interface ElementObject {
-    accessID: string;
-    elementType: string;
-    userAssignedID: string;
-    value: string;
-    formula: string;
-}
-export interface ElementsDictionary {
-    [index: string]: ElementObject;
-}
-
-export interface StateObject {
-    elements: {
-        byID: ElementsDictionary;
-        allIDs: string[];
-    };
-    application: {
-        viewMode: string;
-    };
-}
-
-export const initialState: StateObject = {
-    elements: {
-        byID: {},
-        allIDs: [],
+const initialState = {
+    data: {
+        elements: {},
+        ids: [],
+    },
+    styles: {
+        elements: {},
     },
     application: {
         viewMode: ViewModes.values,
     },
 };
 
-const rootReducer = combineReducers({
-    elements: elementsReducer,
-    application: applicationReducer,
+export const store = configureStore({
+    preloadedState: initialState,
+    reducer: {
+        data: dataSlice.reducer,
+        styles: stylesSlice.reducer,
+        application: applicationSlice.reducer,
+    },
 });
 
-export const store = createStore(rootReducer, initialState, composeWithDevTools());
+export type RootState = ReturnType<typeof store.getState>;
