@@ -6,4 +6,10 @@ export enum ElementTypes {
 export enum ViewModes {
     values = "valueMode",
     formulas = "formulaMode",
+    move = "moveMode",
+}
+
+export enum DefaultPosition {
+    x = 200,
+    y = 200,
 }
