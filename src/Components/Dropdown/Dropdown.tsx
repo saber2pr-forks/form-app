@@ -19,9 +19,9 @@ export default function Dropdown(props: DropdownProps) {
     };
 
     // the rendered choices
-    const choices = props.options.map((option, index) => {
+    const choices = props.options.map((option) => {
         return (
-            <div key={index} className="dropdown-choice" onClick={handleClick(option.value)}>
+            <div key={option.value} className="dropdown-choice" onClick={handleClick(option.value)}>
                 {option.text}
             </div>
         );
