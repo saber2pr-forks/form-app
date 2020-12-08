@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { positiveOrZero } from "../../utils/util";
 
 interface Props {
     moveHandler(x: number, y: number): void;
@@ -26,7 +27,10 @@ export default function Draggable(props: Props) {
     const handleMouseUp = useCallback(
         (event: React.MouseEvent<HTMLElement>) => {
             setDragging(false);
-            dropHandler(event.clientX - clickPosition.x, event.clientY - clickPosition.y);
+            dropHandler(
+                positiveOrZero(event.clientX - clickPosition.x),
+                positiveOrZero(event.clientY - clickPosition.y)
+            );
         },
         [setDragging, dropHandler, clickPosition]
     );
@@ -35,8 +39,10 @@ export default function Draggable(props: Props) {
         (event: MouseEvent) => {
             if (dragging) {
                 event.preventDefault();
-                let curX = event.clientX - clickPosition.x
-                moveHandler(event.clientX - clickPosition.x, event.clientY - clickPosition.y);
+                moveHandler(
+                    positiveOrZero(event.clientX - clickPosition.x),
+                    positiveOrZero(event.clientY - clickPosition.y)
+                );
             }
         },
         [dragging, moveHandler, clickPosition]
