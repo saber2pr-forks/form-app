@@ -3,6 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { ViewModes } from "../../constants";
 import { RootState } from "../../redux/store";
 import stylesSlice from "../../redux/stylesSlice";
+import ContextMenu from "../ContextMenu/ContextMenu";
 import Draggable from "../Draggable/Draggable";
 import "./Cell.css";
 interface CellProps {
@@ -11,6 +12,10 @@ interface CellProps {
     handleValueChange(event: React.ChangeEvent<HTMLInputElement>): void;
     readonly: boolean;
     autocomplete: boolean;
+    contextOptions: {
+        text: string;
+        action(): void;
+    }[][];
     children?: JSX.Element[] | JSX.Element;
 }
 
@@ -57,17 +62,19 @@ export function Cell(props: CellProps) {
                 dropHandler={updateCellPosition}
                 active={viewMode === ViewModes.move}
             >
-                <input
-                    id={id}
-                    type="text"
-                    onChange={handleValueChange}
-                    value={value}
-                    readOnly={readonly}
-                    autoComplete={autocomplete ? "on" : "off"}
-                    style={{
-                        cursor: 'inherit'
-                    }}
-                />
+                <ContextMenu options={props.contextOptions}>
+                    <input
+                        id={id}
+                        type="text"
+                        onChange={handleValueChange}
+                        value={value}
+                        readOnly={readonly}
+                        autoComplete={autocomplete ? "on" : "off"}
+                        style={{
+                            cursor: "inherit",
+                        }}
+                    />
+                </ContextMenu>
             </Draggable>
             {children}
         </div>
