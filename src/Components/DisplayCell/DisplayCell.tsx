@@ -121,6 +121,7 @@ export default function DisplayCell(props: DisplayCellProps) {
                 handleValueChange={handleValueChange}
                 readonly={viewMode === ViewModes.values}
                 autocomplete={false}
+                contextOptions={[]}
             >
                 {viewMode === ViewModes.formulas ? (
                     <Dropdown
