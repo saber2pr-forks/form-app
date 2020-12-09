@@ -1,12 +1,13 @@
 import React from "react";
-import "./App.css";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { ElementTypes, ViewModes } from "../../constants";
-import InputCell from "../InputCell/InputCell";
-import DisplayCell from "../DisplayCell/DisplayCell";
-import { RootState } from "../../redux/store";
-import dataSlice from "../../redux/dataSlice";
 import applicationSlice from "../../redux/applicationSlice";
+import dataSlice from "../../redux/dataSlice";
+import { RootState } from "../../redux/store";
+import ContextMenu from "../ContextMenu/ContextMenu";
+import DisplayCell from "../DisplayCell/DisplayCell";
+import InputCell from "../InputCell/InputCell";
+import "./App.css";
 
 // initialize parser object
 var FormulaParser = require("hot-formula-parser").Parser;
@@ -42,15 +43,6 @@ function Form(props: {}) {
             })
         );
     };
-    const handleToggleViewModeClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (viewMode === ViewModes.formulas) {
-            dispatch(applicationSlice.actions.viewModeChanged({ newMode: ViewModes.values }));
-        } else if (viewMode === ViewModes.values) {
-            dispatch(applicationSlice.actions.viewModeChanged({ newMode: ViewModes.move }));
-        } else {
-            dispatch(applicationSlice.actions.viewModeChanged({ newMode: ViewModes.formulas }));
-        }
-    };
 
     const elements = allIDs.map((id, index) => {
         switch (elementsByID[id].elementType) {
@@ -64,21 +56,67 @@ function Form(props: {}) {
     });
 
     return (
-        <div>
+        <>
             <h1>{viewMode}</h1>
             <button onClick={handleAddInputCellClick}>Add Input Cell</button>
             <button onClick={handleAddDisplayCellClick}>Add Display Cell</button>
-            <button onClick={handleToggleViewModeClick}>Change View Mode</button>
             {elements}
-        </div>
+        </>
     );
 }
 
 function App() {
+    const dispatch = useDispatch();
+
     return (
-        <div>
-            <Form />
-        </div>
+        <>
+            <ContextMenu
+                options={[
+                    [
+                        {
+                            text: "Value Mode",
+                            action: () => {
+                                dispatch(
+                                    applicationSlice.actions.viewModeChanged({
+                                        newMode: ViewModes.values,
+                                    })
+                                );
+                            },
+                        },
+                        {
+                            text: "Formula Mode",
+                            action: () => {
+                                dispatch(
+                                    applicationSlice.actions.viewModeChanged({
+                                        newMode: ViewModes.formulas,
+                                    })
+                                );
+                            },
+                        },
+                        {
+                            text: "Move Mode",
+                            action: () => {
+                                dispatch(
+                                    applicationSlice.actions.viewModeChanged({
+                                        newMode: ViewModes.move,
+                                    })
+                                );
+                            },
+                        },
+                    ],
+                    [
+                        {
+                            text: "Log hello",
+                            action: () => {
+                                console.log("hello");
+                            },
+                        },
+                    ],
+                ]}
+            >
+                <Form />
+            </ContextMenu>
+        </>
     );
 }
 
