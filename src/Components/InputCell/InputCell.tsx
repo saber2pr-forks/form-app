@@ -41,6 +41,16 @@ export default function InputCell(props: InputCellProps) {
             handleValueChange={handleValueChange}
             readonly={viewMode === ViewModes.formulas}
             autocomplete={false}
-        />
+            contextOptions={[
+                [
+                    {
+                        text: "Change ID",
+                        action: () => {
+                            dispatch(dataSlice.actions.idChanged({oldId: props.id, newId: 'newbie'}));
+                        },
+                    },
+                ],
+            ]}
+        ></Cell>
     );
 }
