@@ -38,6 +38,7 @@ const dataSlice = createSlice({
         },
         idChanged(state, action: PayloadAction<{ oldId: string; newId: string }>) {
             state.elements[action.payload.newId] = state.elements[action.payload.oldId];
+            state.elements[action.payload.newId].id = action.payload.newId; // change the nested id too
             delete state.elements[action.payload.oldId];
             state.ids.push(action.payload.newId);
             state.ids.splice(state.ids.indexOf(action.payload.oldId), 1);
