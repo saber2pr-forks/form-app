@@ -35,9 +35,14 @@ const stylesSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(dataSlice.actions.elementAdded, (state, action) => {
-            state.elements[action.payload.id] = { position: { x: 200, y: 200 } }; // default position
-        });
+        builder
+            .addCase(dataSlice.actions.elementAdded, (state, action) => {
+                state.elements[action.payload.id] = { position: { x: 200, y: 200 } }; // default position
+            })
+            .addCase(dataSlice.actions.idChanged, (state, action) => {
+                state.elements[action.payload.newId] = state.elements[action.payload.oldId];
+                delete state.elements[action.payload.oldId];
+            });
     },
 });
 
