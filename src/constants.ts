@@ -1,12 +1,12 @@
 export enum ElementTypes {
     inputCell = "inputCell",
     displayCell = "displayCell",
+    selectCell = "selectCell",
 }
 
 export enum ViewModes {
-    values = "valueMode",
-    formulas = "formulaMode",
-    move = "moveMode",
+    edit = "Edit Mode",
+    view = "View Mode"
 }
 
 export enum DefaultPosition {
