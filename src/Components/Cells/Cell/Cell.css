@@ -1,0 +1,22 @@
+input {
+    font-family: 'Roboto', sans-serif;
+}
+
+input.cell {
+    margin: 5px;
+    cursor: auto;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.id-label {
+    background-color: inherit;
+    position: absolute;
+    top: -.5rem;
+    left: .1rem;
+    font-size: .7rem;
+    font-weight: 600;
+    padding: 0 2px;
+    background-color: white;
+}

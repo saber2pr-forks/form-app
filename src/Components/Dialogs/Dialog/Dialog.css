@@ -1,0 +1,56 @@
+:root {
+    --border-color: #ccc;
+    --header-color: #ddd;
+}
+
+.dialog-background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13), 
+                0 3px 3px rgba(0, 0, 0, 0.13),
+                0 6px 6px rgba(0, 0, 0, 0.13),
+                5px 12px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* to hide the corners */
+}
+
+.dialog-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 5px 0;
+    font-size: 1.17rem;
+    font-weight: 600;
+}
+
+.dialog .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    background-color: var(--header-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dialog .content {
+    min-height: 50%;
+    padding: 10px 5px;
+}
+
+.dialog .footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 3px 5px;
+    border-top: 1px solid var(--border-color);
+}

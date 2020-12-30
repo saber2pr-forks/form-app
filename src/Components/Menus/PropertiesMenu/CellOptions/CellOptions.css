@@ -1,0 +1,80 @@
+.option {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin: 4px 0;
+}
+
+.color-picker {
+  align-self: stretch;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.color-picker .popup {
+  position: absolute;
+  z-index: 100;
+  top: 30px;
+  right: 0;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.1), 2px 3px 3px rgba(0, 0, 0, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.presets {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.presets > div {
+  border-radius: 3px;
+  border: 1px solid gray;
+  height: 21px;
+  width: 21px;
+  margin: 2px;
+}
+
+.presets > div:hover {
+  outline: 1px solid black;
+}
+
+div.color-input {
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 2px solid gray;
+}
+
+div.color-input:focus-within {
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.color-input div {
+  overflow: hidden;
+  background-color: lightgray;
+  border-right: 2px solid gray;
+  overflow: hidden;
+  padding: 0 4px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+}
+
+.color-input input {
+  width: 100%;
+  border: none;
+  border-radius: inherit;
+  outline: none;
+  text-decoration: none;
+}
