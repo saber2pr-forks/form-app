@@ -1,7 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap");
+
+:root {
+  --app-gray: rgba(66, 75, 84, 1);
+  --app-green: rgba(112, 183, 126, 1);
+  --app-lightblue: rgba(191, 215, 234, 1);
+}
+
+html {
+  height: 100vh;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
 
 #root {
-  font-family: 'Roboto', sans-serif;
-  width: 98vw;
-  height: 95vh;
+  font-family: "Roboto", sans-serif;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 25px 1fr 25px;
+  grid-template-columns: 50px 1fr 300px;
+  row-gap: 0px;
+  column-gap: 0px;
+}
+
+.header {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.footer {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+}
+
+.left-toolbar {
+  grid-column: 1;
+}
+
+.right-toolbar {
+  grid-column: 3;
+  grid-row: 2;
+  padding: 5px;
+}
+
+.content {
+  border: 1px solid blue;
+  position: relative;
+  overflow-x: hidden;
 }
