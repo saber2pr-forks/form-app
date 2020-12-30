@@ -1,0 +1,17 @@
+.toolbar {
+  display: flex;
+  height: 25px;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--app-lightblue);
+}
+
+.toolbar * {
+  padding: 0 2px;
+}
+
+.toolbar span {
+  padding: 0 2px;
+  min-width: 6rem;
+}

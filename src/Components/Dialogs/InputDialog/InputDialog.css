@@ -1,0 +1,18 @@
+.label {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.input {
+    margin: 5px;
+}
+
+.input.error {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    text-align: right;
+}

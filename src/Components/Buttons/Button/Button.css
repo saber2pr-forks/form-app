@@ -1,0 +1,49 @@
+.icon-button {
+  cursor: pointer;
+}
+
+.button {
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-size: .9rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  margin: 2px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13), 0 3px 3px rgba(0, 0, 0, 0.13);
+  transition: 0.2s;
+}
+
+.primary {
+  
+}
+
+.info {
+  background-color: rgb(160, 225, 255);
+  color: #222;
+  border-bottom: 2px solid transparent;
+}
+.info:hover {
+  filter: brightness(80%);
+  border-bottom: 2px solid blue;
+}
+
+.muted {
+}
+
+.success {
+  background-color: var(--app-green);
+  color: #333;
+  border-bottom: 2px solid transparent;
+}
+.success:hover {
+  filter: brightness(80%);
+  border-bottom: 2px solid green;
+}
+
+.warning {
+}
+
+.danger {
+}
