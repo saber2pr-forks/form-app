@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "TSC_COMPILE_ON_ERROR=true react-scripts build",
+    "build": "TSC_COMPILE_ON_ERROR=true PUBLIC_URL=/form-app react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
